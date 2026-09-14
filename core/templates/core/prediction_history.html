@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Prediction History</title>
+
+</head>
+
+<body>
+
+    <h2>Prediction History</h2>
+
+    <table border="1" cellpadding="10">
+
+        <tr>
+            <th>ID</th>
+            <th>Study Hours</th>
+            <th>Attendance</th>
+            <th>Previous Marks</th>
+            <th>Prediction</th>
+            <th>PASS Probability</th>
+            <th>Date</th>
+        </tr>
+
+        {% for history in histories %}
+
+        <tr>
+
+            <td>
+                {{ history.id }}
+            </td>
+
+            <td>
+                {{ history.study_hours }}
+            </td>
+
+            <td>
+                {{ history.attendance }}
+            </td>
+
+            <td>
+                {{ history.previous_marks }}
+            </td>
+
+            <td>
+                {{ history.prediction }}
+            </td>
+
+            <td>
+                {{ history.probability }}%
+            </td>
+
+            <td>
+                {{ history.created_at }}
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="7">
+                No prediction history found.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</body>
+</html>

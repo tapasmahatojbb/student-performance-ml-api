@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Prediction</title>
+</head>
+
+<body>
+
+    <h1>Student Performance Prediction</h1>
+
+    {% if error %}
+        <h3>{{ error }}</h3>
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Study Hours:</label>
+        <input type="number" name="study_hours" required>
+
+        <br><br>
+
+        <label>Attendance:</label>
+        <input type="number" name="attendance" required>
+
+        <br><br>
+
+        <label>Previous Marks:</label>
+        <input type="number" name="previous_marks" required>
+
+        <br><br>
+
+        <button type="submit">
+            Predict
+        </button>
+
+    </form>
+
+
+    {% if result %}
+
+        <h2>
+            Prediction: {{ result }}
+        </h2>
+
+    {% endif %}
+
+</body>
+</html>
