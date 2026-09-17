@@ -1,91 +1,352 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "core/base.html" %}
 
-    <title>Student Performance Prediction</title>
+{% block title %}
+AI Prediction | Student Performance AI
+{% endblock %}
 
-</head>
+{% block content %}
 
-<body>
+<div class="row justify-content-center">
 
-    <h2>Student Performance Prediction</h2>
+    <div class="col-lg-9">
 
+        <!-- Page Heading -->
+        <div class="text-center mb-4">
 
-    <form method="POST">
+            <div class="mb-2">
+                <i class="bi bi-stars fs-1 text-primary"></i>
+            </div>
 
-        {% csrf_token %}
+            <h2 class="page-title">
+                AI Student Performance Predictor
+            </h2>
 
+            <p class="page-subtitle">
+                Enter student performance details to predict
+                PASS or FAIL using our trained Machine Learning model.
+            </p>
 
-        <label>
-            Study Hours
-        </label>
-
-        <br>
-
-        <input
-            type="number"
-            name="study_hours"
-            step="0.1"
-            required
-        >
-
-        <br><br>
+        </div>
 
 
-        <label>
-            Attendance
-        </label>
+        <div class="row g-4">
 
-        <br>
+            <!-- Prediction Form -->
+            <div class="col-lg-7">
 
-        <input
-            type="number"
-            name="attendance"
-            step="0.1"
-            required
-        >
+                <div class="custom-card p-4 h-100">
 
-        <br><br>
+                    <div class="d-flex align-items-center mb-4">
 
+                        <div class="me-3">
+                            <i class="bi bi-cpu fs-3 text-primary"></i>
+                        </div>
 
-        <label>
-            Previous Marks
-        </label>
+                        <div>
+                            <h5 class="mb-0">
+                                Student Information
+                            </h5>
 
-        <br>
+                            <small class="text-muted">
+                                Provide the input features for prediction
+                            </small>
+                        </div>
 
-        <input
-            type="number"
-            name="previous_marks"
-            step="0.1"
-            required
-        >
-
-        <br><br>
+                    </div>
 
 
-        <button type="submit">
-            Predict
-        </button>
+                    <form method="POST">
 
-    </form>
+                        {% csrf_token %}
+
+                        <!-- Study Hours -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                <i class="bi bi-book me-1"></i>
+                                Study Hours
+                            </label>
+
+                            <input
+                                type="number"
+                                name="study_hours"
+                                class="form-control"
+                                placeholder="Example: 7"
+                                min="0"
+                                max="24"
+                                step="0.1"
+                                required
+                            >
+
+                            <div class="form-text">
+                                Average study hours per day (0–24)
+                            </div>
+
+                        </div>
 
 
-    {% if result %}
+                        <!-- Attendance -->
+                        <div class="mb-4">
 
-        <hr>
+                            <label class="form-label fw-semibold">
+                                <i class="bi bi-calendar-check me-1"></i>
+                                Attendance (%)
+                            </label>
 
-        <h3>
-            Prediction: {{ result }}
-        </h3>
+                            <input
+                                type="number"
+                                name="attendance"
+                                class="form-control"
+                                placeholder="Example: 80"
+                                min="0"
+                                max="100"
+                                step="0.1"
+                                required
+                            >
 
-        <p>
-            PASS Probability:
-            {{ probability }}%
-        </p>
+                            <div class="form-text">
+                                Student attendance percentage (0–100)
+                            </div>
 
-    {% endif %}
+                        </div>
 
 
-</body>
-</html>
+                        <!-- Previous Marks -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                <i class="bi bi-graph-up-arrow me-1"></i>
+                                Previous Marks
+                            </label>
+
+                            <input
+                                type="number"
+                                name="previous_marks"
+                                class="form-control"
+                                placeholder="Example: 70"
+                                min="0"
+                                max="100"
+                                step="0.1"
+                                required
+                            >
+
+                            <div class="form-text">
+                                Previous examination marks (0–100)
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-grid">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg"
+                            >
+                                <i class="bi bi-stars me-1"></i>
+                                Predict Performance
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- Right Side -->
+            <div class="col-lg-5">
+
+                {% if result %}
+
+                    <div class="custom-card p-4 mb-4">
+
+                        <small class="text-uppercase text-muted fw-semibold">
+                            Prediction Result
+                        </small>
+
+                        {% if result == "PASS" %}
+
+                            <div class="text-center py-3">
+
+                                <i class="bi bi-check-circle-fill
+                                          text-success display-4"></i>
+
+                                <h2 class="result-pass mt-3 mb-1">
+                                    PASS
+                                </h2>
+
+                                <p class="text-muted">
+                                    Predicted student performance
+                                </p>
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="text-center py-3">
+
+                                <i class="bi bi-x-circle-fill
+                                          text-danger display-4"></i>
+
+                                <h2 class="result-fail mt-3 mb-1">
+                                    FAIL
+                                </h2>
+
+                                <p class="text-muted">
+                                    Predicted student performance
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <hr>
+
+
+                        <div class="d-flex justify-content-between mb-2">
+
+                            <span class="text-muted">
+                                PASS Probability
+                            </span>
+
+                            <strong>
+                                {{ probability }}%
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            class="progress"
+                            style="height: 12px;"
+                        >
+
+                            <div
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width: {{ probability }}%;"
+                                aria-valuenow="{{ probability }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="mt-4">
+
+                            <a
+                                href="/predict/"
+                                class="btn btn-outline-primary w-100"
+                            >
+                                <i class="bi bi-arrow-repeat"></i>
+                                New Prediction
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <!-- Model Info -->
+
+                    <div class="custom-card p-4">
+
+                        <div class="text-center mb-4">
+
+                            <i class="bi bi-robot
+                                      display-5 text-primary"></i>
+
+                            <h5 class="mt-3">
+                                ML Prediction Engine
+                            </h5>
+
+                            <p class="text-muted small mb-0">
+                                The application analyzes student
+                                performance features using a trained
+                                machine learning pipeline.
+                            </p>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <div class="d-flex
+                                    justify-content-between
+                                    mb-3">
+
+                            <span class="text-muted">
+                                Model
+                            </span>
+
+                            <strong>
+                                Logistic Regression
+                            </strong>
+
+                        </div>
+
+
+                        <div class="d-flex
+                                    justify-content-between
+                                    mb-3">
+
+                            <span class="text-muted">
+                                Scaling
+                            </span>
+
+                            <strong>
+                                StandardScaler
+                            </strong>
+
+                        </div>
+
+
+                        <div class="d-flex
+                                    justify-content-between
+                                    mb-3">
+
+                            <span class="text-muted">
+                                Output
+                            </span>
+
+                            <strong>
+                                PASS / FAIL
+                            </strong>
+
+                        </div>
+
+
+                        <div class="d-flex
+                                    justify-content-between">
+
+                            <span class="text-muted">
+                                API Security
+                            </span>
+
+                            <span class="badge bg-success">
+                                Protected
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

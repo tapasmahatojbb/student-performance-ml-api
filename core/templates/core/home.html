@@ -140,3 +140,72 @@ Students | Student Performance AI
 </div>
 
 {% endblock %}
+
+{% if students.paginator.num_pages > 1 %}
+
+<nav class="mt-4">
+    <ul class="pagination justify-content-center mb-0">
+
+        {% if students.has_previous %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?page={{ students.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    <i class="bi bi-chevron-left"></i>
+                    Previous
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">
+                    <i class="bi bi-chevron-left"></i>
+                    Previous
+                </span>
+            </li>
+        {% endif %}
+
+
+        {% for num in students.paginator.page_range %}
+
+            {% if students.number == num %}
+
+                <li class="page-item active">
+                    <span class="page-link">
+                        {{ num }}
+                    </span>
+                </li>
+
+            {% else %}
+
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                        {{ num }}
+                    </a>
+                </li>
+
+            {% endif %}
+
+        {% endfor %}
+
+
+        {% if students.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?page={{ students.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    Next
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Next
+                    <i class="bi bi-chevron-right"></i>
+                </span>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+{% endif %}
