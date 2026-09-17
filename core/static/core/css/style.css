@@ -1,0 +1,109 @@
+body {
+    background: #f4f7fb;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+.main-navbar {
+    background: linear-gradient(135deg, #111827, #1d4ed8);
+    padding: 14px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-brand {
+    font-size: 20px;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    margin-left: 10px;
+    transition: 0.2s;
+}
+
+.navbar .nav-link:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.main-content {
+    min-height: calc(100vh - 150px);
+    padding: 35px 0;
+}
+
+.page-title {
+    font-weight: 700;
+    color: #111827;
+}
+
+.page-subtitle {
+    color: #6b7280;
+}
+
+.custom-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card {
+    border: none;
+    border-radius: 16px;
+    transition: 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 11px 14px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    border-color: #2563eb;
+}
+
+.btn {
+    border-radius: 10px;
+}
+
+.btn-primary {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: #f8fafc;
+    color: #475569;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.result-pass {
+    color: #15803d;
+    font-weight: 700;
+}
+
+.result-fail {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.prediction-result {
+    border-radius: 14px;
+    background: #f8fafc;
+    padding: 22px;
+}
+
+.footer {
+    padding: 22px 0;
+    background: #ffffff;
+    color: #64748b;
+    border-top: 1px solid #e5e7eb;
+}

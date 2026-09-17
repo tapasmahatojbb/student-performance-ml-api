@@ -1,203 +1,142 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "core/base.html" %}
 
-    <title>Student Management</title>
+{% block title %}
+Students | Student Performance AI
+{% endblock %}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
 
-        h1 {
-            margin-bottom: 20px;
-        }
+{% block content %}
 
-        form {
-            margin-bottom: 20px;
-        }
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-        input, select, button {
-            padding: 8px;
-            margin-right: 5px;
-        }
+    <div>
+        <h2 class="page-title mb-1">
+            Student Management
+        </h2>
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        <p class="page-subtitle mb-0">
+            Manage student records and performance information.
+        </p>
+    </div>
 
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background: #f2f2f2;
-        }
-
-        a {
-            margin-right: 10px;
-        }
-
-        .success {
-            padding: 10px;
-            margin-bottom: 15px;
-            background: #d4edda;
-        }
-    </style>
-
-</head>
-
-<body>
-
-<h1>Student Management</h1>
-
-
-<!-- Success Message -->
-
-{% if messages %}
-
-    {% for message in messages %}
-
-        <div class="success">
-            {{ message }}
-        </div>
-
-    {% endfor %}
-
-{% endif %}
-
-
-<!-- Search + Filter -->
-
-<form method="GET">
-
-    <input
-        type="text"
-        name="search"
-        placeholder="Search name or city"
-        value="{{ search }}"
-    >
-
-    <select name="marks">
-
-        <option value="">All Marks</option>
-
-        <option value="40" {% if marks == "40" %}selected{% endif %}>
-            40+
-        </option>
-
-        <option value="60" {% if marks == "60" %}selected{% endif %}>
-            60+
-        </option>
-
-        <option value="80" {% if marks == "80" %}selected{% endif %}>
-            80+
-        </option>
-
-    </select>
-
-    <button type="submit">
-        Search
-    </button>
-
-</form>
-
-
-<a href="/student/add/">
-    Add Student
-</a>
-
-
-<br><br>
-
-
-<!-- Student Table -->
-
-<table>
-
-    <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>City</th>
-        <th>Marks</th>
-        <th>Action</th>
-    </tr>
-
-
-    {% for student in students %}
-
-    <tr>
-
-        <td>{{ student.name }}</td>
-
-        <td>{{ student.age }}</td>
-
-        <td>{{ student.city }}</td>
-
-        <td>{{ student.marks }}</td>
-
-        <td>
-
-            <a href="/student/edit/{{ student.id }}/">
-                Edit
-            </a>
-
-            <a href="/student/delete/{{ student.id }}/">
-                Delete
-            </a>
-
-        </td>
-
-    </tr>
-
-    {% empty %}
-
-    <tr>
-        <td colspan="5">
-            No students found.
-        </td>
-    </tr>
-
-    {% endfor %}
-
-</table>
-
-
-<br>
-
-
-<!-- Pagination -->
-
-<div>
-
-    {% if students.has_previous %}
-
-        <a href="?search={{ search }}&marks={{ marks }}&page={{ students.previous_page_number }}">
-            Previous
-        </a>
-
-    {% endif %}
-
-
-    Page {{ students.number }}
-    of
-    {{ students.paginator.num_pages }}
-
-
-    {% if students.has_next %}
-
-        <a href="?search={{ search }}&marks={{ marks }}&page={{ students.next_page_number }}">
-            Next
-        </a>
-
-    {% endif %}
+    <a href="/student/add/" class="btn btn-primary px-4">
+        <i class="bi bi-plus-circle"></i>
+        Add Student
+    </a>
 
 </div>
 
 
-</body>
-</html>
+<div class="custom-card p-4">
+
+    <!-- Search -->
+
+    <form method="GET" class="row g-2 mb-4">
+
+        <div class="col-md-10">
+
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search student by name..."
+                value="{{ request.GET.search }}"
+            >
+
+        </div>
+
+        <div class="col-md-2 d-grid">
+
+            <button class="btn btn-dark">
+                <i class="bi bi-search"></i>
+                Search
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                    <th>Marks</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for student in students %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ student.name }}</strong>
+                    </td>
+
+                    <td>
+                        {{ student.age }}
+                    </td>
+
+                    <td>
+                        {{ student.city }}
+                    </td>
+
+                    <td>
+                        <span class="badge bg-primary">
+                            {{ student.marks }}
+                        </span>
+                    </td>
+
+                    <td class="text-end">
+
+                        <a
+                            href="/student/edit/{{ student.id }}"
+                            class="btn btn-sm btn-outline-primary"
+                        >
+                            <i class="bi bi-pencil"></i>
+                            Edit
+                        </a>
+
+                        <a
+                            href="/student/delete/{{ student.id }}"
+                            class="btn btn-sm btn-outline-danger"
+                        >
+                            <i class="bi bi-trash"></i>
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+                    <td colspan="5" class="text-center py-5 text-muted">
+
+                        <i class="bi bi-people fs-1 d-block mb-2"></i>
+
+                        No students found.
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
