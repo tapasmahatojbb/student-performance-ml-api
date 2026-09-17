@@ -17,3 +17,4 @@ core/ml/saved_models/*.pkl
 *.log
 Tapas_Mahato_Job_Ready_Portfolio.zip
 Tapas_Mahato_Job_Ready_Portfolio/
+staticfiles/
